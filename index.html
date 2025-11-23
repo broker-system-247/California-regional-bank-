@@ -1,0 +1,3082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>California Regional Bank | Elite Banking Since 2018</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #d4af37;
+            --secondary-light: #ffeb3b;
+            --secondary-dark: #9c7e00;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --gray-light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-dark: #343a40;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --bg-color: #f5f7fa;
+            --card-bg: white;
+            --text-color: #333;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f5f5f5;
+            --gray-light: #2d2d2d;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Page Containers */
+        .page-container {
+            display: none;
+        }
+
+        .landing-page {
+            display: block;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .logo p {
+            font-size: 0.7rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(26, 35, 126, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--text-light);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 L1000,100 L0,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .badge span {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background-color: var(--card-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--gray-light);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 4rem 2rem;
+            background-color: var(--gray-light);
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partner-logo {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .partner-logo i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 2rem;
+            background-color: var(--card-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background-color: var(--gray-light);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonial-card:before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.1);
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-light);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .login-left-content {
+            max-width: 500px;
+        }
+
+        .login-left h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-form h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .verification-step {
+            display: none;
+        }
+
+        .login-disclaimer {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+            background-color: var(--card-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dashboard-main {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--card-bg);
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-menu a span {
+            display: none;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-banner h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .last-login {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .account-notice {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            display: none;
+        }
+
+        .accounts-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .account-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
+        }
+
+        .account-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .account-name {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .account-balance {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .account-number {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .total-balance {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .total-balance h3 {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            background-color: var(--card-bg);
+            border: none;
+            padding: 1.5rem 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            color: var(--text-color);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .recent-transactions {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h3 {
+            color: var(--primary);
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .transaction-list {
+            list-style: none;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .transaction-details h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .transaction-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .amount-positive {
+            color: var(--success);
+        }
+
+        .amount-negative {
+            color: var(--danger);
+        }
+
+        .amount-pending {
+            color: var(--warning);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Forms */
+        .form-container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Transfer Options */
+        .transfer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .transfer-option {
+            border: 2px solid #eee;
+            border-radius: var(--radius);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: var(--card-bg);
+        }
+
+        .transfer-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(26, 35, 126, 0.05);
+        }
+
+        .transfer-option i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Cards Section */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card-item {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .card-logo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        .card-number {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card-action-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card-action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Investments Section */
+        .investments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .investment-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Loans Section */
+        .loans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .loan-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Settings Section */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .setting-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .setting-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .setting-option:last-child {
+            border-bottom: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .receipt-modal .modal-content {
+            max-width: 400px;
+        }
+
+        .receipt {
+            background-color: var(--card-bg);
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .receipt-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .dashboard-main {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 1rem 0;
+            }
+            
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .sidebar-menu li {
+                flex-shrink: 0;
+                margin-bottom: 0;
+            }
+            
+            .sidebar-menu a {
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Collapsible Sidebar Toggle */
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <h2>California Regional Bank</h2>
+        <p>Loading your secure banking experience...</p>
+    </div>
+
+    <!-- Landing Page -->
+    <div class="page-container landing-page" id="landingPage">
+        <header>
+            <div class="logo">
+                <i class="fas fa-university"></i>
+                <div class="logo-text">
+                    <h1>California Regional Bank</h1>
+                    <p>ELITE BANKING SOLUTIONS</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#partners">Partners</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="loginBtn">Login</button>
+                <button class="btn btn-primary">Open Account</button>
+            </div>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h2>Elite Banking for Discerning Clients</h2>
+                <p>Experience world-class financial services with California Regional Bank. Since 2018, we've been providing exclusive banking solutions to high-net-worth individuals and businesses.</p>
+                <button class="btn btn-primary">Discover Our Services</button>
+                
+                <div class="trust-badges">
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>FDIC Insured</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>256-bit Encryption</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-award"></i>
+                        <span>Best Private Bank 2024</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-globe"></i>
+                        <span>Global Presence</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="section-title">
+                <h2>Why Choose California Regional Bank?</h2>
+                <p>We offer a comprehensive suite of financial services designed to meet the needs of our elite clientele.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Advanced Security</h3>
+                    <p>Your assets are protected with our state-of-the-art security systems and 24/7 monitoring.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Global Transfers</h3>
+                    <p>Seamlessly transfer funds to any bank in the US, Europe, or worldwide with competitive rates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Wealth Management</h3>
+                    <p>Expert investment advice and portfolio management to grow your wealth effectively.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Elite Cards</h3>
+                    <p>Exclusive metal cards with premium benefits, concierge services, and global acceptance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Digital Banking</h3>
+                    <p>Full-featured mobile and online banking with intuitive interfaces and advanced capabilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <h3>Dedicated Support</h3>
+                    <p>Personal relationship managers providing tailored service for all your banking needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="partners" id="partners">
+            <div class="section-title">
+                <h2>Our Premium Partners</h2>
+                <p>We collaborate with leading brands to enhance your banking experience.</p>
+            </div>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="partner-logo">
+                    <i class="fas fa-gas-pump"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <div class="section-title">
+                <h2>Client Testimonials</h2>
+                <p>Hear what our valued clients have to say about their experience with California Regional Bank.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "California Regional Bank has transformed how I manage my international business. Their global transfer capabilities are unmatched, and the personalized service is exceptional."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RS</div>
+                        <div class="author-info">
+                            <h4>Robert Smith</h4>
+                            <p>CEO, Global Enterprises</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "The security features give me complete peace of mind. I know my assets are protected with California Regional Bank's advanced systems. The investment advisory has also significantly grown my portfolio."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MJ</div>
+                        <div class="author-info">
+                            <h4>Maria Johnson</h4>
+                            <p>Investment Portfolio Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "As a frequent traveler, the travel booking features and international card services have been incredibly convenient. The elite card benefits have saved me thousands on travel expenses."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">TD</div>
+                        <div class="author-info">
+                            <h4>Thomas Davis</h4>
+                            <p>International Consultant</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "The wealth management team at California Regional Bank has helped grow my portfolio by 35% in just two years. Their expertise in international markets is unparalleled."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AS</div>
+                        <div class="author-info">
+                            <h4>Amanda Stevens</h4>
+                            <p>Wealth Management Client</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="about">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>California Regional Bank</h3>
+                    <p>Providing elite banking solutions since 2018. Licensed and regulated by international financial authorities.</p>
+                    <p><strong>Support Email:</strong> primerockllc@outlook.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Services</a></li>
+                        <li><a href="#partners">Partners</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Security Information</a></li>
+                        <li><a href="#">Regulatory Disclosures</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 California Regional Bank. All rights reserved. | Member FDIC | Equal Housing Lender | Licensed by the California Department of Financial Protection and Innovation</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Page -->
+    <div class="page-container login-container" id="loginPage">
+        <div class="login-left">
+            <div class="login-left-content">
+                <h2>Welcome to California Regional Bank</h2>
+                <p>Access your elite banking dashboard with secure authentication. Your financial world awaits.</p>
+                <div class="security-features">
+                    <h3>Security Features:</h3>
+                    <ul>
+                        <li>Multi-factor authentication</li>
+                        <li>End-to-end encryption</li>
+                        <li>Real-time fraud monitoring</li>
+                        <li>Biometric verification</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="login-right">
+            <div class="login-form">
+                <h2>Account Login</h2>
+                <div class="form-group">
+                    <label for="email">Email Address or Username</label>
+                    <input type="text" id="email" class="form-control" placeholder="Enter your email or username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password">
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <button class="btn-login" id="loginSubmit">Continue</button>
+
+                <div class="verification-step" id="verificationStep">
+                    <div class="form-group">
+                        <label for="verificationCode">Verification Code</label>
+                        <input type="text" id="verificationCode" class="form-control" placeholder="Enter 6-digit code">
+                        <p class="help-text">We've sent a verification code to your email. Please enter it below.</p>
+                    </div>
+                    <button class="btn-login" id="verifyCode">Verify & Login</button>
+                </div>
+
+                <div class="login-disclaimer">
+                    <p>By logging in, you agree to our Terms of Service and Privacy Policy. California Regional Bank uses advanced security measures to protect your information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="page-container dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <div class="logo">
+                <i class="fas fa-university"></i>
+                <div class="logo-text">
+                    <h1>California Regional Bank</h1>
+                    <p>ELITE BANKING SOLUTIONS</p>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">AD</div>
+                <div>
+                    <div class="user-name">Albert Dawson</div>
+                    <div class="user-email">ca2371643@gmail.com</div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-main">
+            <div class="sidebar" id="sidebar">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active" data-section="overview"><i class="fas fa-tachometer-alt"></i> <span>Overview</span></a></li>
+                    <li><a href="#" data-section="transfer"><i class="fas fa-exchange-alt"></i> <span>Transfer Money</span></a></li>
+                    <li><a href="#" data-section="billpay"><i class="fas fa-file-invoice-dollar"></i> <span>Bill Pay</span></a></li>
+                    <li><a href="#" data-section="history"><i class="fas fa-history"></i> <span>Transaction History</span></a></li>
+                    <li><a href="#" data-section="cards"><i class="fas fa-credit-card"></i> <span>Cards</span></a></li>
+                    <li><a href="#" data-section="investments"><i class="fas fa-chart-line"></i> <span>Investments</span></a></li>
+                    <li><a href="#" data-section="loans"><i class="fas fa-hand-holding-usd"></i> <span>Loans</span></a></li>
+                    <li><a href="#" data-section="travel"><i class="fas fa-plane"></i> <span>Travel</span></a></li>
+                    <li><a href="#" data-section="statements"><i class="fas fa-file-pdf"></i> <span>Statements</span></a></li>
+                    <li><a href="#" data-section="security"><i class="fas fa-shield-alt"></i> <span>Security</span></a></li>
+                    <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <!-- Overview Section -->
+                <div class="content-section active" id="overviewSection">
+                    <div class="welcome-banner">
+                        <div>
+                            <h2>Welcome back, Albert</h2>
+                            <p class="last-login">Last login: Today, 09:42 AM</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="quickTransferBtn">Quick Transfer</button>
+                        </div>
+                    </div>
+
+                    <div class="account-notice" id="accountNotice">
+                        <p><strong>Account Notice:</strong> Your account is currently under review due to a transfer initiated from an unknown device. All outgoing transfers will remain pending until the review is complete. For assistance, contact primerockllc@outlook.com.</p>
+                    </div>
+
+                    <div class="total-balance">
+                        <h3>Total Balance</h3>
+                        <div class="balance-amount">$48,653,000.00</div>
+                    </div>
+
+                    <div class="accounts-overview">
+                        <div class="account-card">
+                            <div class="account-header">
+                                <div class="account-name">Premier Checking</div>
+                                <div class="account-balance">$18,452,000.00</div>
+                            </div>
+                            <div class="account-number">**** 7294</div>
+                        </div>
+                        <div class="account-card">
+                            <div class="account-header">
+                                <div class="account-name">High-Yield Savings</div>
+                                <div class="account-balance">$12,387,000.00</div>
+                            </div>
+                            <div class="account-number">**** 3812</div>
+                        </div>
+                        <div class="account-card">
+                            <div class="account-header">
+                                <div class="account-name">Investment Portfolio</div>
+                                <div class="account-balance">$12,750,000.00</div>
+                            </div>
+                            <div class="account-number">**** 5547</div>
+                        </div>
+                        <div class="account-card">
+                            <div class="account-header">
+                                <div class="account-name">Business Reserve</div>
+                                <div class="account-balance">$5,064,000.00</div>
+                            </div>
+                            <div class="account-number">**** 9263</div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn" id="sendMoneyBtn">
+                            <div class="action-icon"><i class="fas fa-paper-plane"></i></div>
+                            <div>Send Money</div>
+                        </button>
+                        <button class="action-btn" id="payBillsBtn">
+                            <div class="action-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                            <div>Pay Bills</div>
+                        </button>
+                        <button class="action-btn" id="transferBtn">
+                            <div class="action-icon"><i class="fas fa-exchange-alt"></i></div>
+                            <div>Transfer</div>
+                        </button>
+                        <button class="action-btn" id="investBtn">
+                            <div class="action-icon"><i class="fas fa-chart-line"></i></div>
+                            <div>Invest</div>
+                        </button>
+                        <button class="action-btn" id="travelBtn">
+                            <div class="action-icon"><i class="fas fa-plane"></i></div>
+                            <div>Travel</div>
+                        </button>
+                        <button class="action-btn" id="statementsBtn">
+                            <div class="action-icon"><i class="fas fa-file-pdf"></i></div>
+                            <div>Statements</div>
+                        </button>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <div class="section-header">
+                            <h3>Recent Transactions</h3>
+                            <a href="#" class="view-all" data-section="history">View All</a>
+                        </div>
+                        <ul class="transaction-list" id="transactionList">
+                            <!-- Transactions will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Transfer Section -->
+                <div class="content-section" id="transferSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Transfer Money</h1>
+                            <p>Send money to any bank account worldwide</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="transfer-options">
+                        <div class="transfer-option selected" data-type="zelle">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <div>Zelle</div>
+                        </div>
+                        <div class="transfer-option" data-type="bank">
+                            <i class="fas fa-university"></i>
+                            <div>Bank Transfer</div>
+                        </div>
+                        <div class="transfer-option" data-type="wire">
+                            <i class="fas fa-globe"></i>
+                            <div>Wire Transfer</div>
+                        </div>
+                        <div class="transfer-option" data-type="international">
+                            <i class="fas fa-plane"></i>
+                            <div>International</div>
+                        </div>
+                    </div>
+
+                    <div class="form-container" id="transferFormContainer">
+                        <form id="transferForm">
+                            <div class="form-group">
+                                <label for="transferFromAccount">From Account</label>
+                                <select id="transferFromAccount" class="form-control" required>
+                                    <option value="">Select an account</option>
+                                    <option value="checking">Premier Checking (****7294) - $18,452,000.00</option>
+                                    <option value="savings">High-Yield Savings (****3812) - $12,387,000.00</option>
+                                    <option value="investment">Investment Portfolio (****5547) - $12,750,000.00</option>
+                                    <option value="business">Business Reserve (****9263) - $5,064,000.00</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="transferAmount">Amount</label>
+                                <input type="number" id="transferAmount" class="form-control" placeholder="0.00" min="0.01" step="0.01" required>
+                            </div>
+
+                            <div id="zelleForm" class="transfer-type-form">
+                                <div class="form-group">
+                                    <label for="zelleRecipient">Recipient Email or Phone</label>
+                                    <input type="text" id="zelleRecipient" class="form-control" placeholder="Enter email or phone number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zelleNote">Note (Optional)</label>
+                                    <input type="text" id="zelleNote" class="form-control" placeholder="Add a note">
+                                </div>
+                            </div>
+
+                            <div id="bankForm" class="transfer-type-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="bankName">Bank Name</label>
+                                    <select id="bankName" class="form-control">
+                                        <option value="">Select a bank</option>
+                                        <option value="chase">Chase Bank</option>
+                                        <option value="bankofamerica">Bank of America</option>
+                                        <option value="wellsfargo">Wells Fargo</option>
+                                        <option value="citibank">Citi Bank</option>
+                                        <option value="usbank">U.S. Bank</option>
+                                        <option value="pnc">PNC Bank</option>
+                                        <option value="truist">Truist Bank</option>
+                                        <option value="capitalone">Capital One</option>
+                                        <option value="tdbank">TD Bank</option>
+                                        <option value="hsbc">HSBC Bank</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bankAccountNumber">Account Number</label>
+                                    <input type="text" id="bankAccountNumber" class="form-control" placeholder="Enter account number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bankRoutingNumber">Routing Number</label>
+                                    <input type="text" id="bankRoutingNumber" class="form-control" placeholder="Enter routing number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bankRecipientName">Recipient Name</label>
+                                    <input type="text" id="bankRecipientName" class="form-control" placeholder="Enter recipient name">
+                                </div>
+                            </div>
+
+                            <div id="wireForm" class="transfer-type-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="wireBankName">Bank Name</label>
+                                    <input type="text" id="wireBankName" class="form-control" placeholder="Enter bank name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireAccountNumber">Account Number</label>
+                                    <input type="text" id="wireAccountNumber" class="form-control" placeholder="Enter account number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireRoutingNumber">Routing Number</label>
+                                    <input type="text" id="wireRoutingNumber" class="form-control" placeholder="Enter routing number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireRecipientName">Recipient Name</label>
+                                    <input type="text" id="wireRecipientName" class="form-control" placeholder="Enter recipient name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireRecipientAddress">Recipient Address</label>
+                                    <input type="text" id="wireRecipientAddress" class="form-control" placeholder="Enter recipient address">
+                                </div>
+                            </div>
+
+                            <div id="internationalForm" class="transfer-type-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="internationalCountry">Country</label>
+                                    <select id="internationalCountry" class="form-control">
+                                        <option value="">Select a country</option>
+                                        <option value="uk">United Kingdom</option>
+                                        <option value="germany">Germany</option>
+                                        <option value="france">France</option>
+                                        <option value="canada">Canada</option>
+                                        <option value="australia">Australia</option>
+                                        <option value="japan">Japan</option>
+                                        <option value="china">China</option>
+                                        <option value="brazil">Brazil</option>
+                                        <option value="mexico">Mexico</option>
+                                        <option value="india">India</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="internationalBankName">Bank Name</label>
+                                    <input type="text" id="internationalBankName" class="form-control" placeholder="Enter bank name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="internationalAccountNumber">Account Number/IBAN</label>
+                                    <input type="text" id="internationalAccountNumber" class="form-control" placeholder="Enter account number or IBAN">
+                                </div>
+                                <div class="form-group">
+                                    <label for="internationalSwiftCode">SWIFT/BIC Code</label>
+                                    <input type="text" id="internationalSwiftCode" class="form-control" placeholder="Enter SWIFT/BIC code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="internationalRecipientName">Recipient Name</label>
+                                    <input type="text" id="internationalRecipientName" class="form-control" placeholder="Enter recipient name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="internationalRecipientAddress">Recipient Address</label>
+                                    <input type="text" id="internationalRecipientAddress" class="form-control" placeholder="Enter recipient address">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-login">Send Money</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Bill Pay Section -->
+                <div class="content-section" id="billpaySection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Bill Pay</h1>
+                            <p>Pay your bills quickly and securely</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="billPayForm">
+                            <div class="form-group">
+                                <label for="billPayee">Payee</label>
+                                <select id="billPayee" class="form-control" required>
+                                    <option value="">Select a payee</option>
+                                    <option value="vikki">Vikki Ship Supplies</option>
+                                    <option value="electric">Electric Company</option>
+                                    <option value="water">Water Department</option>
+                                    <option value="internet">Internet Provider</option>
+                                    <option value="mortgage">Mortgage Company</option>
+                                    <option value="creditcard">Credit Card</option>
+                                    <option value="insurance">Insurance Company</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="billAccountNumber">Account Number</label>
+                                <input type="text" id="billAccountNumber" class="form-control" placeholder="Enter your account number with payee" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="billAmount">Amount</label>
+                                <input type="number" id="billAmount" class="form-control" placeholder="0.00" min="0.01" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="billDueDate">Due Date</label>
+                                <input type="date" id="billDueDate" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="billFromAccount">From Account</label>
+                                <select id="billFromAccount" class="form-control" required>
+                                    <option value="">Select an account</option>
+                                    <option value="checking">Premier Checking (****7294)</option>
+                                    <option value="savings">High-Yield Savings (****3812)</option>
+                                    <option value="business">Business Reserve (****9263)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-login">Pay Bill</button>
+                        </form>
+                    </div>
+
+                    <div class="recent-transactions" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h3>Scheduled Bill Payments</h3>
+                        </div>
+                        <ul class="transaction-list" id="scheduledBillsList">
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Vikki Ship Supplies</h4>
+                                        <div class="transaction-date">Due: Nov 30, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$10,000.00
+                                </div>
+                                <div class="status-badge status-pending">Scheduled</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Transaction History Section -->
+                <div class="content-section" id="historySection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Transaction History</h1>
+                            <p>View all your transactions</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <div class="section-header">
+                            <h3>All Transactions</h3>
+                            <button class="btn btn-primary" id="downloadStatementBtn">Download Statement</button>
+                        </div>
+                        <ul class="transaction-list" id="fullTransactionList">
+                            <!-- Full transaction list will be populated by JavaScript -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cards Section -->
+                <div class="content-section" id="cardsSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Card Management</h1>
+                            <p>Manage your debit and credit cards</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="card-item">
+                            <div class="card-logo">
+                                <div class="card-chip"></div>
+                                <div class="card-type">Platinum</div>
+                            </div>
+                            <div class="card-number">**** **** **** 7294</div>
+                            <div class="card-details">
+                                <div>
+                                    <div class="card-holder">ALBERT DAWSON</div>
+                                    <div class="card-expiry">08/28</div>
+                                </div>
+                                <div class="card-brand">
+                                    <i class="fab fa-cc-visa"></i>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="card-action-btn" data-card="7294" data-action="block">Block Card</button>
+                                <button class="card-action-btn" data-card="7294" data-action="details">View Details</button>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-logo">
+                                <div class="card-chip"></div>
+                                <div class="card-type">World Elite</div>
+                            </div>
+                            <div class="card-number">**** **** **** 3812</div>
+                            <div class="card-details">
+                                <div>
+                                    <div class="card-holder">ALBERT DAWSON</div>
+                                    <div class="card-expiry">11/29</div>
+                                </div>
+                                <div class="card-brand">
+                                    <i class="fab fa-cc-mastercard"></i>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="card-action-btn" data-card="3812" data-action="block">Block Card</button>
+                                <button class="card-action-btn" data-card="3812" data-action="details">View Details</button>
+                            </div>
+                        </div>
+                        <div class="card-item">
+                            <div class="card-logo">
+                                <div class="card-chip"></div>
+                                <div class="card-type">Business</div>
+                            </div>
+                            <div class="card-number">**** **** **** 9263</div>
+                            <div class="card-details">
+                                <div>
+                                    <div class="card-holder">ALBERT DAWSON</div>
+                                    <div class="card-expiry">05/27</div>
+                                </div>
+                                <div class="card-brand">
+                                    <i class="fab fa-cc-amex"></i>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <button class="card-action-btn" data-card="9263" data-action="block">Block Card</button>
+                                <button class="card-action-btn" data-card="9263" data-action="details">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 1.5rem;">Order New Card</button>
+
+                    <div class="recent-transactions" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h3>Recent Card Transactions</h3>
+                        </div>
+                        <ul class="transaction-list" id="cardTransactionsList">
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Amazon Purchase</h4>
+                                        <div class="transaction-date">Nov 20, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$245.67
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-gas-pump"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Gas Station</h4>
+                                        <div class="transaction-date">Nov 18, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$85.50
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Investments Section -->
+                <div class="content-section" id="investmentsSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Investment Portfolio</h1>
+                            <p>Manage your investments and track performance</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="total-balance">
+                        <h3>Portfolio Value</h3>
+                        <div class="balance-amount">$12,750,000.00</div>
+                        <p style="color: var(--success); margin-top: 0.5rem;">+$450,000.00 (3.66%) this month</p>
+                    </div>
+
+                    <div class="investments-grid">
+                        <div class="investment-card">
+                            <h3>Stocks</h3>
+                            <div class="account-balance">$8,450,000.00</div>
+                            <p>+$320,000.00 (3.94%)</p>
+                        </div>
+                        <div class="investment-card">
+                            <h3>Bonds</h3>
+                            <div class="account-balance">$2,150,000.00</div>
+                            <p>+$45,000.00 (2.14%)</p>
+                        </div>
+                        <div class="investment-card">
+                            <h3>Mutual Funds</h3>
+                            <div class="account-balance">$1,850,000.00</div>
+                            <p>+$65,000.00 (3.64%)</p>
+                        </div>
+                        <div class="investment-card">
+                            <h3>Real Estate</h3>
+                            <div class="account-balance">$300,000.00</div>
+                            <p>+$20,000.00 (7.14%)</p>
+                        </div>
+                    </div>
+
+                    <div class="recent-transactions" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h3>Recent Investment Activity</h3>
+                            <button class="btn btn-primary">New Investment</button>
+                        </div>
+                        <ul class="transaction-list">
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Apple Inc. (AAPL)</h4>
+                                        <div class="transaction-date">Nov 15, 2025 - Purchase</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$500,000.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Microsoft Corp. (MSFT)</h4>
+                                        <div class="transaction-date">Nov 10, 2025 - Dividend</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-positive">
+                                    +$12,450.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Loans Section -->
+                <div class="content-section" id="loansSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Loans</h1>
+                            <p>Manage your loans and payment history</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="loans-grid">
+                        <div class="loan-card">
+                            <h3>Business Loan</h3>
+                            <div class="account-balance">$2,500,000.00</div>
+                            <p>Remaining Balance</p>
+                            <div style="margin-top: 1rem;">
+                                <p>Interest Rate: 4.25%</p>
+                                <p>Monthly Payment: $18,750.00</p>
+                                <p>Next Payment Due: Dec 15, 2025</p>
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 1rem;">Make Payment</button>
+                        </div>
+                        <div class="loan-card">
+                            <h3>Mortgage</h3>
+                            <div class="account-balance">$1,850,000.00</div>
+                            <p>Remaining Balance</p>
+                            <div style="margin-top: 1rem;">
+                                <p>Interest Rate: 3.75%</p>
+                                <p>Monthly Payment: $8,950.00</p>
+                                <p>Next Payment Due: Dec 1, 2025</p>
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 1rem;">Make Payment</button>
+                        </div>
+                    </div>
+
+                    <div class="recent-transactions" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h3>Loan Payment History</h3>
+                        </div>
+                        <ul class="transaction-list">
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Mortgage Payment</h4>
+                                        <div class="transaction-date">Nov 1, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$8,950.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Business Loan Payment</h4>
+                                        <div class="transaction-date">Nov 15, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$18,750.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Mortgage Payment</h4>
+                                        <div class="transaction-date">Oct 1, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$8,950.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>Business Loan Payment</h4>
+                                        <div class="transaction-date">Oct 15, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount amount-negative">
+                                    -$18,750.00
+                                </div>
+                                <div class="status-badge status-completed">Completed</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Travel Section -->
+                <div class="content-section" id="travelSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Travel Booking</h1>
+                            <p>Book flights, hotels, and rental cars</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="travelForm">
+                            <div class="form-group">
+                                <label for="travelType">Travel Type</label>
+                                <select id="travelType" class="form-control" required>
+                                    <option value="">Select type</option>
+                                    <option value="flight">Flight</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="car">Rental Car</option>
+                                    <option value="package">Vacation Package</option>
+                                </select>
+                            </div>
+
+                            <div id="flightForm" class="travel-type-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="flightFrom">From</label>
+                                        <input type="text" id="flightFrom" class="form-control" placeholder="City or airport">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="flightTo">To</label>
+                                        <input type="text" id="flightTo" class="form-control" placeholder="City or airport">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="flightDeparture">Departure Date</label>
+                                        <input type="date" id="flightDeparture" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="flightReturn">Return Date</label>
+                                        <input type="date" id="flightReturn" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="flightPassengers">Passengers</label>
+                                    <select id="flightPassengers" class="form-control">
+                                        <option value="1">1 Passenger</option>
+                                        <option value="2">2 Passengers</option>
+                                        <option value="3">3 Passengers</option>
+                                        <option value="4">4 Passengers</option>
+                                        <option value="5">5+ Passengers</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="hotelForm" class="travel-type-form" style="display: none;">
+                                <div class="form-group">
+                                    <label for="hotelDestination">Destination</label>
+                                    <input type="text" id="hotelDestination" class="form-control" placeholder="City, hotel, or landmark">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="hotelCheckIn">Check-in Date</label>
+                                        <input type="date" id="hotelCheckIn" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="hotelCheckOut">Check-out Date</label>
+                                        <input type="date" id="hotelCheckOut" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelRooms">Rooms</label>
+                                    <select id="hotelRooms" class="form-control">
+                                        <option value="1">1 Room</option>
+                                        <option value="2">2 Rooms</option>
+                                        <option value="3">3 Rooms</option>
+                                        <option value="4">4+ Rooms</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="travelPaymentAccount">Payment Account</label>
+                                <select id="travelPaymentAccount" class="form-control" required>
+                                    <option value="">Select an account</option>
+                                    <option value="checking">Premier Checking (****7294)</option>
+                                    <option value="savings">High-Yield Savings (****3812)</option>
+                                    <option value="business">Business Reserve (****9263)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-login">Search & Book</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Statements Section -->
+                <div class="content-section" id="statementsSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Account Statements</h1>
+                            <p>View and download your account statements</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <div class="section-header">
+                            <h3>Available Statements</h3>
+                        </div>
+                        <ul class="transaction-list">
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>October 2025 Statement</h4>
+                                        <div class="transaction-date">Nov 5, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="btn btn-primary">Download PDF</button>
+                                </div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>September 2025 Statement</h4>
+                                        <div class="transaction-date">Oct 5, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="btn btn-primary">Download PDF</button>
+                                </div>
+                            </li>
+                            <li class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="transaction-details">
+                                        <h4>August 2025 Statement</h4>
+                                        <div class="transaction-date">Sep 5, 2025</div>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <button class="btn btn-primary">Download PDF</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Security Section -->
+                <div class="content-section" id="securitySection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Security Center</h1>
+                            <p>Manage your account security settings</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3>Security Settings</h3>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>Two-Factor Authentication</h4>
+                                    <p>Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>Login Alerts</h4>
+                                    <p>Get notified when someone logs into your account</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>Transaction Alerts</h4>
+                                    <p>Receive alerts for large transactions</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <h3>Security Alerts</h3>
+                            <p>No recent security alerts. Your account is secure.</p>
+                            <button class="btn btn-primary" style="margin-top: 1rem;" id="securityAlertBtn">Report Security Issue</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="content-section" id="settingsSection">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Account Settings</h1>
+                            <p>Manage your account preferences and information</p>
+                        </div>
+                        <button class="back-btn" data-section="overview">
+                            <i class="fas fa-arrow-left"></i> Back to Overview
+                        </button>
+                    </div>
+
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <h3>Profile Settings</h3>
+                            <form id="profileForm">
+                                <div class="form-group">
+                                    <label for="profileFirstName">First Name</label>
+                                    <input type="text" id="profileFirstName" class="form-control" value="Albert">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileLastName">Last Name</label>
+                                    <input type="text" id="profileLastName" class="form-control" value="Dawson">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileEmail">Email Address</label>
+                                    <input type="email" id="profileEmail" class="form-control" value="ca2371643@gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePhone">Phone Number</label>
+                                    <input type="tel" id="profilePhone" class="form-control" value="+1 (555) 123-4567">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                        </div>
+
+                        <div class="setting-card">
+                            <h3>Security Settings</h3>
+                            <form id="passwordForm">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+                        </div>
+
+                        <div class="setting-card">
+                            <h3>Preferences</h3>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>Dark Mode</h4>
+                                    <p>Switch between light and dark themes</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>Email Notifications</h4>
+                                    <p>Receive email updates about your account</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="setting-option">
+                                <div>
+                                    <h4>SMS Notifications</h4>
+                                    <p>Receive text message alerts</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Alert Modal -->
+    <div class="modal" id="securityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Security Alert</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Your security alert has been sent to our support team. You will receive a response at ca2371643@gmail.com within 24 hours.</p>
+                <p>For immediate assistance, contact: <strong>primerockllc@outlook.com</strong></p>
+                <button class="btn-login" style="margin-top: 1.5rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Details Modal -->
+    <div class="modal" id="cardDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Card Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="card-item">
+                    <div class="card-logo">
+                        <div class="card-chip"></div>
+                        <div class="card-type">Platinum</div>
+                    </div>
+                    <div class="card-number">4532 8192 3746 7294</div>
+                    <div class="card-details">
+                        <div>
+                            <div class="card-holder">ALBERT DAWSON</div>
+                            <div class="card-expiry">08/28</div>
+                        </div>
+                        <div class="card-brand">
+                            <i class="fab fa-cc-visa"></i>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <p><strong>CVV:</strong> 384</p>
+                    <p><strong>Daily Limit:</strong> $25,000.00</p>
+                    <p><strong>Status:</strong> Active</p>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 1.5rem; width: 100%;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transfer Confirmation Modal -->
+    <div class="modal" id="transferConfirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Transfer Initiated</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Your transfer has been initiated successfully. Due to recent activity from an unknown device, this transfer will remain pending until our security team completes its review.</p>
+                <p>You will receive a notification once the transfer is processed.</p>
+                <button class="btn-login" style="margin-top: 1.5rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample transaction data (60+ transactions)
+        const transactions = [
+            { id: 1, date: "2022-03-15", description: "Contract Award Deposit", amount: 2500000, type: "credit", status: "completed" },
+            { id: 2, date: "2022-06-22", description: "Contract Award Deposit", amount: 2500000, type: "credit", status: "completed" },
+            { id: 3, date: "2022-09-10", description: "Office Equipment Purchase", amount: -12500, type: "debit", status: "completed" },
+            { id: 4, date: "2022-12-05", description: "Contract Award Deposit", amount: 2500000, type: "credit", status: "completed" },
+            { id: 5, date: "2023-02-18", description: "Home Mortgage Payment", amount: -18500, type: "debit", status: "completed" },
+            { id: 6, date: "2023-05-30", description: "Contract Award Deposit", amount: 2500000, type: "credit", status: "completed" },
+            { id: 7, date: "2023-08-12", description: "Tax Payment", amount: -425000, type: "debit", status: "completed" },
+            { id: 8, date: "2023-11-25", description: "Contract Award Deposit", amount: 2500000, type: "credit", status: "completed" },
+            { id: 9, date: "2024-01-14", description: "Home Mortgage Payment", amount: -18500, type: "debit", status: "completed" },
+            { id: 10, date: "2024-03-05", description: "Internet & Phone Bill", amount: -450, type: "debit", status: "completed" },
+            { id: 11, date: "2024-06-18", description: "Car Purchase - Mercedes S-Class", amount: -35000, type: "debit", status: "completed" },
+            { id: 12, date: "2024-09-02", description: "Investment Deposit", amount: 2000000, type: "credit", status: "completed" },
+            { id: 13, date: "2025-02-10", description: "Home Mortgage Payment", amount: -18500, type: "debit", status: "completed" },
+            { id: 14, date: "2025-05-22", description: "Business Equipment", amount: -87500, type: "debit", status: "completed" },
+            { id: 15, date: "2025-07-15", description: "Grocery Delivery", amount: -350, type: "debit", status: "completed" },
+            { id: 16, date: "2025-08-03", description: "Phone Subscription", amount: -120, type: "debit", status: "completed" },
+            { id: 17, date: "2025-09-03", description: "Car Purchase - Porsche 911", amount: -56000, type: "debit", status: "completed" },
+            { id: 18, date: "2025-09-03", description: "Project Clearance Payment", amount: 15000000, type: "credit", status: "completed" },
+            { id: 19, date: "2025-10-12", description: "Work Activity Equipment", amount: -12500, type: "debit", status: "completed" },
+            { id: 20, date: "2025-10-28", description: "Grocery Delivery", amount: -280, type: "debit", status: "completed" },
+            { id: 21, date: "2025-11-05", description: "Internet Bill", amount: -150, type: "debit", status: "completed" },
+            { id: 22, date: "2025-11-12", description: "Grocery Delivery", amount: -195, type: "debit", status: "completed" },
+            { id: 23, date: "2025-11-13", description: "Construction Project Payment", amount: -15361000, type: "debit", status: "completed" },
+            { id: 24, date: "2025-11-17", description: "Vikki Ship Supplies", amount: -10000, type: "debit", status: "completed" },
+            { id: 25, date: "2025-11-21", description: "My Neighbor Refund Payment", amount: -9000, type: "debit", status: "pending" }
+        ];
+
+        // Add more transactions to reach 60+
+        for (let i = 26; i <= 60; i++) {
+            const year = 2020 + Math.floor(Math.random() * 6);
+            const month = Math.floor(Math.random() * 12) + 1;
+            const day = Math.floor(Math.random() * 28) + 1;
+            const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            
+            const types = ['credit', 'debit'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            const descriptions = [
+                'Contract Payment', 'Investment Return', 'Dividend Payment', 'Salary Deposit',
+                'Utility Bill', 'Credit Card Payment', 'Insurance Payment', 'Shopping',
+                'Dining', 'Travel Expense', 'Entertainment', 'Subscription Renewal'
+            ];
+            const description = descriptions[Math.floor(Math.random() * descriptions.length)];
+            
+            let amount;
+            if (type === 'credit') {
+                amount = Math.floor(Math.random() * 500000) + 10000;
+            } else {
+                amount = -(Math.floor(Math.random() * 5000) + 10);
+            }
+            
+            transactions.push({
+                id: i,
+                date: date,
+                description: description,
+                amount: amount,
+                type: type,
+                status: 'completed'
+            });
+        }
+
+        // Sort transactions by date (newest first)
+        transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // DOM Elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const landingPage = document.getElementById('landingPage');
+        const loginPage = document.getElementById('loginPage');
+        const dashboard = document.getElementById('dashboard');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginSubmit = document.getElementById('loginSubmit');
+        const verifyCode = document.getElementById('verifyCode');
+        const verificationStep = document.getElementById('verificationStep');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const transactionList = document.getElementById('transactionList');
+        const fullTransactionList = document.getElementById('fullTransactionList');
+        const securityModal = document.getElementById('securityModal');
+        const cardDetailsModal = document.getElementById('cardDetailsModal');
+        const transferConfirmModal = document.getElementById('transferConfirmModal');
+        const securityAlertBtn = document.getElementById('securityAlertBtn');
+        const closeModals = document.querySelectorAll('.close-modal');
+        const transferOptions = document.querySelectorAll('.transfer-option');
+        const cardActionBtns = document.querySelectorAll('.card-action-btn');
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+        const contentSections = document.querySelectorAll('.content-section');
+        const backBtns = document.querySelectorAll('.back-btn');
+        const themeToggle = document.getElementById('themeToggle');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const accountNotice = document.getElementById('accountNotice');
+        const transferForm = document.getElementById('transferForm');
+        const billPayForm = document.getElementById('billPayForm');
+        const travelForm = document.getElementById('travelForm');
+        const profileForm = document.getElementById('profileForm');
+        const passwordForm = document.getElementById('passwordForm');
+        const quickTransferBtn = document.getElementById('quickTransferBtn');
+
+        // User data
+        let userData = {
+            username: 'albertdawson2020',
+            email: 'ca2371643@gmail.com',
+            password: 'mywealth2020',
+            firstName: 'Albert',
+            lastName: 'Dawson',
+            phone: '+1 (555) 123-4567',
+            darkMode: false
+        };
+
+        // Initialize the application
+        function init() {
+            // Check if user data exists in localStorage
+            const storedUserData = localStorage.getItem('userData');
+            if (storedUserData) {
+                userData = JSON.parse(storedUserData);
+            }
+
+            // Check if dark mode is enabled
+            if (userData.darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.checked = true;
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            // Check if there are pending transfers
+            const pendingTransfers = localStorage.getItem('pendingTransfers');
+            if (pendingTransfers && JSON.parse(pendingTransfers).length > 0) {
+                accountNotice.style.display = 'block';
+            }
+        }
+
+        // Simulate loading
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                landingPage.style.display = 'block';
+                init();
+            }, 2000);
+        });
+
+        // Login functionality
+        loginBtn.addEventListener('click', () => {
+            landingPage.style.display = 'none';
+            loginPage.style.display = 'flex';
+        });
+
+        loginSubmit.addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if ((email === userData.email || email === userData.username) && password === userData.password) {
+                document.querySelector('.login-form h2').textContent = 'Verify Your Identity';
+                verificationStep.style.display = 'block';
+                document.getElementById('email').parentElement.style.display = 'none';
+                document.getElementById('password').parentElement.style.display = 'none';
+                document.querySelector('.form-options').style.display = 'none';
+                loginSubmit.style.display = 'none';
+            } else {
+                alert('Invalid credentials. Please use "ca2371643@gmail.com" or "albertdawson2020" as username/email and "mywealth2020" as password.');
+            }
+        });
+
+        verifyCode.addEventListener('click', () => {
+            loginPage.style.display = 'none';
+            dashboard.style.display = 'block';
+            populateTransactions();
+        });
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            dashboard.style.display = 'none';
+            landingPage.style.display = 'block';
+        });
+
+        // Populate transactions
+        function populateTransactions() {
+            transactionList.innerHTML = '';
+            fullTransactionList.innerHTML = '';
+            
+            // Show only recent transactions (last 10) for overview
+            const recentTransactions = transactions.slice(0, 10);
+            
+            recentTransactions.forEach(transaction => {
+                const li = createTransactionElement(transaction);
+                transactionList.appendChild(li);
+            });
+            
+            // Show all transactions for history page
+            transactions.forEach(transaction => {
+                const li = createTransactionElement(transaction);
+                fullTransactionList.appendChild(li);
+            });
+        }
+
+        // Create transaction element
+        function createTransactionElement(transaction) {
+            const li = document.createElement('li');
+            li.className = 'transaction-item';
+            
+            const date = new Date(transaction.date);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            
+            const amountClass = transaction.type === 'credit' ? 'amount-positive' : 
+                              transaction.status === 'pending' ? 'amount-pending' : 'amount-negative';
+            
+            const statusClass = transaction.status === 'completed' ? 'status-completed' : 'status-pending';
+            
+            li.innerHTML = `
+                <div class="transaction-info">
+                    <div class="transaction-icon">
+                        <i class="fas ${transaction.type === 'credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h4>${transaction.description}</h4>
+                        <div class="transaction-date">${formattedDate}</div>
+                    </div>
+                </div>
+                <div class="transaction-amount ${amountClass}">
+                    ${transaction.type === 'credit' ? '+' : '-'}$${Math.abs(transaction.amount).toLocaleString()}
+                </div>
+                <div class="status-badge ${statusClass}">${transaction.status === 'completed' ? 'Completed' : 'Processing'}</div>
+            `;
+            
+            return li;
+        }
+
+        // Modal functionality
+        securityAlertBtn.addEventListener('click', () => {
+            securityModal.style.display = 'flex';
+        });
+
+        closeModals.forEach(btn => {
+            btn.addEventListener('click', () => {
+                securityModal.style.display = 'none';
+                cardDetailsModal.style.display = 'none';
+                transferConfirmModal.style.display = 'none';
+            });
+        });
+
+        // Transfer option selection
+        transferOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                transferOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                // Show the appropriate form
+                const transferType = option.getAttribute('data-type');
+                document.querySelectorAll('.transfer-type-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                document.getElementById(`${transferType}Form`).style.display = 'block';
+            });
+        });
+
+        // Card actions
+        cardActionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.getAttribute('data-action');
+                const card = btn.getAttribute('data-card');
+                
+                if (action === 'details') {
+                    cardDetailsModal.style.display = 'flex';
+                } else if (action === 'block') {
+                    if (confirm('Are you sure you want to block this card?')) {
+                        alert(`Card ending in ${card} has been blocked successfully.`);
+                    }
+                }
+            });
+        });
+
+        // Sidebar navigation
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                link.classList.add('active');
+                
+                // Get the section to show
+                const section = link.getAttribute('data-section');
+                
+                // Hide all content sections
+                contentSections.forEach(s => s.classList.remove('active'));
+                
+                // Show the selected section
+                document.getElementById(`${section}Section`).classList.add('active');
+            });
+        });
+
+        // Back buttons
+        backBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.getAttribute('data-section');
+                
+                // Hide all content sections
+                contentSections.forEach(s => s.classList.remove('active'));
+                
+                // Show the overview section
+                document.getElementById(`${section}Section`).classList.add('active');
+                
+                // Update sidebar active link
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            });
+        });
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            userData.darkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            if (userData.darkMode) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.checked = true;
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                darkModeToggle.checked = false;
+            }
+        });
+
+        // Dark mode toggle in settings
+        darkModeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+            userData.darkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            if (userData.darkMode) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Sidebar toggle
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Transfer form submission
+        transferForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show transfer confirmation modal
+            transferConfirmModal.style.display = 'flex';
+            
+            // Show account notice
+            accountNotice.style.display = 'block';
+            
+            // Store pending transfer in localStorage
+            const pendingTransfers = JSON.parse(localStorage.getItem('pendingTransfers') || '[]');
+            pendingTransfers.push({
+                id: Date.now(),
+                date: new Date().toISOString(),
+                amount: document.getElementById('transferAmount').value,
+                type: 'debit',
+                status: 'pending'
+            });
+            localStorage.setItem('pendingTransfers', JSON.stringify(pendingTransfers));
+            
+            // Reset form
+            transferForm.reset();
+        });
+
+        // Bill pay form submission
+        billPayForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Bill payment scheduled successfully.');
+            billPayForm.reset();
+        });
+
+        // Travel form submission
+        travelForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Travel search completed. Results would be displayed here in a real application.');
+            travelForm.reset();
+        });
+
+        // Profile form submission
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Update user data
+            userData.firstName = document.getElementById('profileFirstName').value;
+            userData.lastName = document.getElementById('profileLastName').value;
+            userData.email = document.getElementById('profileEmail').value;
+            userData.phone = document.getElementById('profilePhone').value;
+            
+            // Save to localStorage
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            alert('Profile updated successfully.');
+        });
+
+        // Password form submission
+        passwordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (currentPassword !== userData.password) {
+                alert('Current password is incorrect.');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match.');
+                return;
+            }
+            
+            // Update password
+            userData.password = newPassword;
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            alert('Password changed successfully.');
+            passwordForm.reset();
+        });
+
+        // Quick transfer button
+        quickTransferBtn.addEventListener('click', () => {
+            // Show transfer section
+            contentSections.forEach(s => s.classList.remove('active'));
+            document.getElementById('transferSection').classList.add('active');
+            
+            // Update sidebar active link
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            document.querySelector('[data-section="transfer"]').classList.add('active');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === securityModal) {
+                securityModal.style.display = 'none';
+            }
+            if (e.target === cardDetailsModal) {
+                cardDetailsModal.style.display = 'none';
+            }
+            if (e.target === transferConfirmModal) {
+                transferConfirmModal.style.display = 'none';
+            }
+        });
+
+        // Travel type change
+        document.getElementById('travelType').addEventListener('change', (e) => {
+            const travelType = e.target.value;
+            document.querySelectorAll('.travel-type-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            
+            if (travelType) {
+                document.getElementById(`${travelType}Form`).style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
